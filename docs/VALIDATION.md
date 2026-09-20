@@ -77,6 +77,8 @@ Retained delivery screenshots:
 
 Additional reproducible screenshots and HTML reports remain in ignored `test-results/` and `playwright-report/`; regenerate them with `npm run validate`.
 
-## Known boundaries
+## Original local-validation boundaries
+
+This section records the initial local-only validation; the subsequent authorized cloud and custom-domain publication is documented in `DEPLOYMENT.md`.
 
 No real-model/runtime, backend, external sending, cloud deployment, DNS, mobile hardware, Safari/Firefox, comprehensive manual assistive-technology, or real-world decision-calibration test was run. Extra-check findings and final verification are synthetic user-selected inputs, not independently verified external results. No local persistence exists. The planned domain is not asserted to be live. Source links were read directly as primary web sources on 2026-09-20; portfolio neighbor links are intentionally not invented.

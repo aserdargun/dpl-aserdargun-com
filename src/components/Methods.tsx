@@ -153,8 +153,8 @@ export function Methods({
         </p>
         <p>
           {t(
-            "Yerel kalıcılık kullanılmaz; sayfa yenilenince deney sıfırlanır. Tamamlanmış koşuyu korumak için sürümlü JSON kaydını indirin. Planlanan alan adı: dpl.aserdargun.com — yayında olduğu doğrulanmış bir hizmet değildir.",
-            "There is no local persistence; reloading resets the experiment. Download the versioned JSON record to retain a completed run. Planned domain: dpl.aserdargun.com — not a verified live service.",
+            "Yerel kalıcılık kullanılmaz; sayfa yenilenince deney sıfırlanır. Tamamlanmış koşuyu korumak için sürümlü JSON kaydını indirin. Yayın adresi: dpl.aserdargun.com.",
+            "There is no local persistence; reloading resets the experiment. Download the versioned JSON record to retain a completed run. Publication address: dpl.aserdargun.com.",
           )}
         </p>
       </section>

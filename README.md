@@ -4,7 +4,7 @@
 
 An independent, deterministic, bilingual TR/EN laboratory for exploring when an agent should take a short path, evaluate further, ask for evidence or clarification, await approval, abstain, or block an action.
 
-This is a working local simulation, not an LLM runtime. No API key, model, account, backend, external data store, real sending action, or persistent browser storage is used. Planned domain: `dpl.aserdargun.com` (not a verified live deployment). Parent research area: HNS — Harness Engineering Observatory. No neighboring application is integrated.
+This is a working local simulation, not an LLM runtime. No API key, model, account, backend, external data store, real sending action, or persistent browser storage is used. Publication address: [dpl.aserdargun.com](https://dpl.aserdargun.com). Parent research area: HNS — Harness Engineering Observatory. No neighboring application is integrated.
 
 ## Local use / Yerelde çalıştırma
 
@@ -51,7 +51,7 @@ Astra 6 High is the model used to develop this application; no Astra or other mo
 
 `npm run build` produces a self-contained static `dist/` directory. Host only that directory on a static HTTPS host. All three surfaces are client-side views under `/`, so no server routing is required. Assets use local paths; fonts are system fonts; no CDN is needed. External research links open only when the user clicks them.
 
-The authorized Azure publication uses `rg-dpl-aserdargun-com` / `swa-dpl-aserdargun-com` in `aserdargun subscription 3`, West Europe, Free SKU. The single production workflow validates and deploys prebuilt `dist/` from `main`; it then verifies the live commit and asset hashes and runs the browser suite against production. Custom domains, DNS, and other portfolio repositories remain outside this deployment. See [architecture](docs/ARCHITECTURE.md), [validation evidence](docs/VALIDATION.md), and [visual specification](docs/DESIGN.md).
+The authorized Azure publication uses `rg-dpl-aserdargun-com` / `swa-dpl-aserdargun-com` in `aserdargun subscription 3`, West Europe, Free SKU. The single production workflow validates and deploys prebuilt `dist/` from `main`; it then verifies the live commit and asset hashes and runs the browser suite against production. The separately authorized custom domain is `dpl.aserdargun.com`, with DNS managed at IHS. Other portfolio repositories remain outside this deployment. See [architecture](docs/ARCHITECTURE.md), [validation evidence](docs/VALIDATION.md), and [visual specification](docs/DESIGN.md).
 
 ## Research
 

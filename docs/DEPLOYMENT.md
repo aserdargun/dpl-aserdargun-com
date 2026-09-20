@@ -10,6 +10,7 @@ Authorized 2026-09-20 after local validation and GitHub publication.
 | Static Web App              | `swa-dpl-aserdargun-com`                                 |
 | Region / SKU                | West Europe / Free                                       |
 | Azure-generated endpoint    | https://orange-desert-036a46e03.5.azurestaticapps.net    |
+| Custom domain               | https://dpl.aserdargun.com                               |
 | Static artifact             | `dist/`                                                  |
 | Workflow                    | `.github/workflows/deploy-swa-dpl-aserdargun-com.yml`    |
 | Actions secret              | `AZURE_STATIC_WEB_APPS_API_TOKEN_SWA_DPL_ASERDARGUN_COM` |
@@ -32,14 +33,14 @@ The SHA, branch, workflow success, Azure environment Ready status and update tim
 
 ```sh
 npm run verify:artifact
-DPL_BASE_URL=https://orange-desert-036a46e03.5.azurestaticapps.net npm run verify:live
-DPL_BASE_URL=https://orange-desert-036a46e03.5.azurestaticapps.net npm run test:e2e
+DPL_BASE_URL=https://dpl.aserdargun.com npm run verify:live
+DPL_BASE_URL=https://dpl.aserdargun.com npm run test:e2e
 ```
 
 `verify:live` expects the current checkout HEAD unless `DPL_EXPECTED_SHA` or `GITHUB_SHA` is provided. `release.json` also includes file hashes and build time. Local working-tree builds are for validation; authoritative production builds run from the exact checked-out Actions commit.
 
 ## Boundaries
 
-No custom domain or DNS records are changed. `dpl.aserdargun.com` remains a planned custom domain. No paid SKU, backend, external integration, model access, or other portfolio repository is added. There is one workflow and Azure's source integration is disabled to avoid duplicate generated workflows. After DPL resource creation this subscription has 10 Free Static Web Apps.
+The separately authorized custom domain is `dpl.aserdargun.com`. IHS holds the `dpl` CNAME pointing to the Azure-generated hostname and the `_dnsauth.dpl` TXT ownership record. No other DNS records are changed. No paid SKU, backend, external integration, model access, or other portfolio repository is added. There is one workflow and Azure's source integration is disabled to avoid duplicate generated workflows. After DPL resource creation this subscription has 10 Free Static Web Apps.
 
 The original local-only validation record remains in `VALIDATION.md`; cloud publication is a subsequent authorized operation. Research sources and model/simulation boundaries remain unchanged.
