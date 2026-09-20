@@ -1,5 +1,7 @@
 # DPL local validation — 2026-09-20
 
+This records the initial local-only delivery. The subsequent authorized Azure deployment contract is in [DEPLOYMENT.md](DEPLOYMENT.md), with per-release evidence in GitHub Actions.
+
 Final command: `npm run validate:codex` → exit 0. No production deployment, Git push, cloud/DNS change, or neighboring repository modification was performed.
 
 ## Executed checks

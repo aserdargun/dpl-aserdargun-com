@@ -45,4 +45,4 @@ DPL's policy definitions, gate priorities, costs and scenarios are educational d
 
 ## Static release
 
-Vite bundles React + TypeScript to `dist/`. Navigation is local view state at `/`. Hosting requires only static assets; no backend, database, key, telemetry, or accounts. No cloud resource or DNS configuration was changed. Local lifecycle is loopback-only and strict-port; Stop inspects listener cwd before SIGTERM. Development port 8031, isolated production browser-test port 18032.
+Vite bundles React + TypeScript to `dist/`. Navigation is local view state at `/`. Hosting requires only static assets; no backend, database, key, telemetry, or accounts. The subsequent authorized Azure deployment is described in `DEPLOYMENT.md`; no custom domain or DNS configuration is changed. Local lifecycle is loopback-only and strict-port; Stop inspects listener cwd before SIGTERM. Development port 8031, isolated production browser-test port 18032.

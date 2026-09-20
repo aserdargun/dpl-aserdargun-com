@@ -51,7 +51,7 @@ Astra 6 High is the model used to develop this application; no Astra or other mo
 
 `npm run build` produces a self-contained static `dist/` directory. Host only that directory on a static HTTPS host. All three surfaces are client-side views under `/`, so no server routing is required. Assets use local paths; fonts are system fonts; no CDN is needed. External research links open only when the user clicks them.
 
-Publication, Git push, Azure resources, DNS changes, and other portfolio repositories are outside this task. Nothing has been deployed. See [architecture](docs/ARCHITECTURE.md), [validation evidence](docs/VALIDATION.md), and [visual specification](docs/DESIGN.md).
+The authorized Azure publication uses `rg-dpl-aserdargun-com` / `swa-dpl-aserdargun-com` in `aserdargun subscription 3`, West Europe, Free SKU. The single production workflow validates and deploys prebuilt `dist/` from `main`; it then verifies the live commit and asset hashes and runs the browser suite against production. Custom domains, DNS, and other portfolio repositories remain outside this deployment. See [architecture](docs/ARCHITECTURE.md), [validation evidence](docs/VALIDATION.md), and [visual specification](docs/DESIGN.md).
 
 ## Research
 
@@ -59,3 +59,11 @@ Source records, publication/access dates, qualifications, and bilingual paraphra
 
 - [Anthropic — Building effective agents](https://www.anthropic.com/engineering/building-effective-agents), 2024-12-19. Workflow/agent distinction and routing patterns.
 - [Anthropic — The “think” tool](https://www.anthropic.com/engineering/claude-think-tool), 2025-03-20. Includes the 2025-12-15 update recommending extended thinking instead in most cases. Historical conceptual context; its benchmark results are not DPL results.
+
+Azure-generated endpoint: [DPL](https://orange-desert-036a46e03.5.azurestaticapps.net). See [deployment contract](docs/DEPLOYMENT.md); each release is verified by its successful Actions run and `/release.json` commit.
+
+## Deployment verification
+
+The build stamps `dist/release.json` with the full source commit and static asset SHA-256 hashes. `npm run verify:artifact` checks the deployable files and references. Run `DPL_BASE_URL=https://<azure-generated-host> npm run verify:live` for release, HTTP, MIME, hashes and cache verification. `DPL_BASE_URL=https://<azure-generated-host> npm run test:e2e` exercises the complete browser suite on production without starting a local test server. Production has no write endpoints; those tests use browser-local simulation state and downloads only.
+
+HTML revalidates, release metadata is not cached, and content-hashed assets are immutable. The deployment secret is stored only in GitHub Actions, never in source or browser code. Official action commit pins were verified from their owning GitHub repositories on 2026-09-20.
