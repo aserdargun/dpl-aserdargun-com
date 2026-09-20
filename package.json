@@ -1,0 +1,37 @@
+{
+  "name": "dpl-decision-plane-laboratory",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 8031 --strictPort",
+    "dev:codex": "npm run dev",
+    "stop": "node scripts/stop.mjs",
+    "stop:codex": "npm run stop",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 8031 --strictPort",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "validate": "npm run test && npm run build && npm run test:e2e && git diff --check",
+    "validate:codex": "npm run validate"
+  },
+  "dependencies": {
+    "lucide-react": "^1.47.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.6.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^4.7.0",
+    "typescript": "^7.0.2",
+    "vite": "^7.3.6",
+    "vitest": "^4.1.11"
+  }
+}

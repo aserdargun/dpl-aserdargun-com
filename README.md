@@ -1,0 +1,61 @@
+# DPL — Decision Plane Laboratory
+
+**Karar Düzlemi Laboratuvarı · System One ↔ System Two**
+
+An independent, deterministic, bilingual TR/EN laboratory for exploring when an agent should take a short path, evaluate further, ask for evidence or clarification, await approval, abstain, or block an action.
+
+This is a working local simulation, not an LLM runtime. No API key, model, account, backend, external data store, real sending action, or persistent browser storage is used. Planned domain: `dpl.aserdargun.com` (not a verified live deployment). Parent research area: HNS — Harness Engineering Observatory. No neighboring application is integrated.
+
+## Local use / Yerelde çalıştırma
+
+Requires Node.js >=22.12 and npm. The safe Stop helper requires `lsof` (tested on macOS).
+
+```sh
+npm ci
+npx playwright install chromium
+npm run dev
+```
+
+Open **http://127.0.0.1:8031**. Choose a scenario, select a policy, play or step, inspect the rules, change conditions, compare policies, and download completed runs as JSON. Changing language preserves the run. Refreshing the page resets it.
+
+```sh
+npm run test          # Domain and safe lifecycle tests
+npm run build         # Strict TypeScript + production output in dist/
+npm run test:e2e      # Chromium user flows against production build (build first)
+npm run validate     # Tests + build + browser tests + whitespace validation
+npm run preview      # Serve dist/ at http://127.0.0.1:8031 (stop dev first)
+npm run stop         # Stop this checkout's listener on port 8031 only
+```
+
+`npm run validate:codex`, `npm run dev:codex`, and `npm run stop:codex` are aliases for the same lifecycle. Local Codex Run/Validate/Stop actions are configured in the checkout-local `.codex/environments/environment.toml` (excluded from Git). Browser tests start their own production preview at port **18032**, refuse occupied ports, and shut it down themselves. They do not stop a running development preview on 8031. The dev server does not write build output.
+
+Stop verifies **every listener's real working directory** before issuing SIGTERM. A foreign process causes refusal, and no listener is touched. Ownership is rechecked before termination. Stop never broadly matches process names, and never uses SIGKILL. Already-stopped is a successful no-op. `DPL_PORT` can explicitly select another port for the same ownership check; this is used by isolated lifecycle tests. On systems without `lsof`, Stop refuses rather than guessing.
+
+## What works
+
+- Six complete bilingual scenarios with synthetic records, dates, explicit claim conflicts, and conditional expected outcomes.
+- Three fixed policies: fast-first, deep-first, adaptive. Shared authority, clarity, and mandatory-evidence gates cannot be skipped.
+- Pure typed decision engine, finite work-unit budgets, immutable run snapshots, readable rules and prerequisites.
+- Live diagram, play/pause/step/reset, editable conditions, full textual trace and outcome.
+- Frozen equal-input comparison, individual and comparison JSON downloads.
+- Source and method page distinguishing primary-source explanations, DPL design choices, synthetic inputs, and computed simulation outcomes.
+- Keyboard focus, skip link, labeled controls, reduced-motion support, responsive reflow.
+
+## Boundaries / Sınırlar
+
+“System One” and “System Two” are a **design metaphor**, not claims about model cognition. Extra evaluation does not grant authority. Work units are explicitly chosen simulation costs, not tokens, money, accuracy probabilities, or measured latency. Playback timing is presentation only. Verification and extra-check findings are user-controlled synthetic inputs, not real checks against an external system. Completed runs do not execute the scenario's external action. Decision traces are rule logs, not hidden chain of thought.
+
+Astra 6 High is the model used to develop this application; no Astra or other model runs in DPL. Neighboring HNS, ARL, CTX, SEC, and EVL relationships are conceptual only. Their URLs are intentionally not invented or presented as verified live integrations.
+
+## Release preparation
+
+`npm run build` produces a self-contained static `dist/` directory. Host only that directory on a static HTTPS host. All three surfaces are client-side views under `/`, so no server routing is required. Assets use local paths; fonts are system fonts; no CDN is needed. External research links open only when the user clicks them.
+
+Publication, Git push, Azure resources, DNS changes, and other portfolio repositories are outside this task. Nothing has been deployed. See [architecture](docs/ARCHITECTURE.md), [validation evidence](docs/VALIDATION.md), and [visual specification](docs/DESIGN.md).
+
+## Research
+
+Source records, publication/access dates, qualifications, and bilingual paraphrases are maintained in `src/data/methods.ts`. Verified on 2026-09-20:
+
+- [Anthropic — Building effective agents](https://www.anthropic.com/engineering/building-effective-agents), 2024-12-19. Workflow/agent distinction and routing patterns.
+- [Anthropic — The “think” tool](https://www.anthropic.com/engineering/claude-think-tool), 2025-03-20. Includes the 2025-12-15 update recommending extended thinking instead in most cases. Historical conceptual context; its benchmark results are not DPL results.
