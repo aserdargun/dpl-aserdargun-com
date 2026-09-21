@@ -24,6 +24,7 @@ import { Trace } from "./components/Trace";
 import { Evidence } from "./components/Evidence";
 import { Comparison } from "./components/Comparison";
 import { Methods } from "./components/Methods";
+import { portfolioUrl } from "./data/methods";
 export default function App() {
   const [locale, setLocale] = useState<Locale>("tr");
   const [page, setPage] = useState("lab");
@@ -107,6 +108,7 @@ export default function App() {
           onClick={(e) => {
             e.preventDefault();
             setPage("lab");
+            setPlaying(false);
           }}
           aria-label="DPL"
         >
@@ -152,6 +154,17 @@ export default function App() {
         </div>
       </header>
       <main id="main">
+        <nav className="portfolio-path" aria-label={t("Öğrenme yolu", "Learning path")}>
+          <a href={portfolioUrl(locale)} target="_blank" rel="noreferrer">
+            aserdargun.com ↗
+          </a>
+          <span aria-hidden="true">/</span>
+          <span>{t("Ajan sistemi", "Agent system")}</span>
+          <span aria-hidden="true">/</span>
+          <a href="https://hns.aserdargun.com/" target="_blank" rel="noreferrer">HNS ↗</a>
+          <span aria-hidden="true">/</span>
+          <span aria-current="page">DPL</span>
+        </nav>
         <div className="intro">
           <div>
             <h1>
@@ -336,6 +349,7 @@ export default function App() {
             locale={locale}
             onScenario={(id) => {
               selectScenario(id);
+              setPolicy("adaptive");
               reset();
               setPage("lab");
               window.scrollTo({ top: 0 });
@@ -354,7 +368,9 @@ export default function App() {
           </span>
         </span>
         <span>
-          DPL <span className="muted">/</span> 1.0
+          <a href={portfolioUrl(locale)} target="_blank" rel="noreferrer">
+            {t("Öğrenme sistemine dön ↗", "Back to the learning system ↗")}
+          </a>
         </span>
       </footer>
     </>

@@ -195,7 +195,9 @@ export function Comparison({
                     <dd>
                       {r.outcome.verified
                         ? t("Geçti (simülasyon)", "Passed (simulation)")
-                        : t("Tamamlanmadı", "Not completed")}
+                        : r.outcome.ruleId === "OUTPUT.REJECT"
+                          ? t("Başarısız (simülasyon)", "Failed (simulation)")
+                          : t("Çalıştırılmadı", "Not run")}
                     </dd>
                   </div>
                   <div>

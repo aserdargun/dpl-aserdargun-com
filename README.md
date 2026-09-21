@@ -4,7 +4,7 @@
 
 An independent, deterministic, bilingual TR/EN laboratory for exploring when an agent should take a short path, evaluate further, ask for evidence or clarification, await approval, abstain, or block an action.
 
-This is a working local simulation, not an LLM runtime. No API key, model, account, backend, external data store, real sending action, or persistent browser storage is used. Publication address: [dpl.aserdargun.com](https://dpl.aserdargun.com). Parent research area: HNS — Harness Engineering Observatory. No neighboring application is integrated.
+This is a working local simulation, not an LLM runtime. No API key, model, account, backend, external data store, real sending action, or persistent browser storage is used. Publication address: [dpl.aserdargun.com](https://dpl.aserdargun.com). DPL belongs to the **Agent system** layer of the [aserdargun.com learning system](https://aserdargun.com/), under [HNS — Harness Engineering Observatory](https://hns.aserdargun.com/). Portfolio links open independent applications; no neighboring application is integrated.
 
 ## Local use / Yerelde çalıştırma
 
@@ -39,13 +39,14 @@ Stop verifies **every listener's real working directory** before issuing SIGTERM
 - Live diagram, play/pause/step/reset, editable conditions, full textual trace and outcome.
 - Frozen equal-input comparison, individual and comparison JSON downloads.
 - Source and method page distinguishing primary-source explanations, DPL design choices, synthetic inputs, and computed simulation outcomes.
+- Locale-aware portfolio return links and eight related learning destinations: HNS, ARL, CTX, SEC, EVL, CUL, AOS, and MEM. No run data is transferred. Method examples reset to their default inputs and the adaptive policy.
 - Keyboard focus, skip link, labeled controls, reduced-motion support, responsive reflow.
 
 ## Boundaries / Sınırlar
 
 “System One” and “System Two” are a **design metaphor**, not claims about model cognition. Extra evaluation does not grant authority. Work units are explicitly chosen simulation costs, not tokens, money, accuracy probabilities, or measured latency. Playback timing is presentation only. Verification and extra-check findings are user-controlled synthetic inputs, not real checks against an external system. Completed runs do not execute the scenario's external action. Decision traces are rule logs, not hidden chain of thought.
 
-Astra 6 High is the model used to develop this application; no Astra or other model runs in DPL. Neighboring HNS, ARL, CTX, SEC, and EVL relationships are conceptual only. Their URLs are intentionally not invented or presented as verified live integrations.
+No model runs in DPL. Related application names and URLs follow the root portfolio's `data/living-system.json` and `data/system-focus.json`; HTTP availability was checked on 2026-09-21. These are learning relationships, not runtime integrations. AOS links to its public overview and documentation; DPL does not execute an AOS runtime. The final-check trace reads a synthetic verification input and displays the frozen authority; it does not revalidate external permissions. Comparison results distinguish failed verification from verification that never ran.
 
 ## Release preparation
 
@@ -55,7 +56,7 @@ The authorized Azure publication uses `rg-dpl-aserdargun-com` / `swa-dpl-aserdar
 
 ## Research
 
-Source records, publication/access dates, qualifications, and bilingual paraphrases are maintained in `src/data/methods.ts`. Verified on 2026-09-20:
+Source records, publication/access dates, qualifications, and bilingual paraphrases are maintained in `src/data/methods.ts`. Rechecked on 2026-09-21:
 
 - [Anthropic — Building effective agents](https://www.anthropic.com/engineering/building-effective-agents), 2024-12-19. Workflow/agent distinction and routing patterns.
 - [Anthropic — The “think” tool](https://www.anthropic.com/engineering/claude-think-tool), 2025-03-20. Includes the 2025-12-15 update recommending extended thinking instead in most cases. Historical conceptual context; its benchmark results are not DPL results.

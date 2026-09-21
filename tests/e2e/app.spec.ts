@@ -147,17 +147,42 @@ test("methods are bilingual, source links real and lesson opens intended scenari
   page,
 }) => {
   await page.goto("/");
+  await page.getByLabel("Karar politikası", { exact: true }).selectOption("deep");
   await page.getByRole("button", { name: "Kavramlar ve yöntem" }).click();
   await expect(page.locator(".lesson-list article")).toHaveCount(6);
   await expect(page.locator(".source-record a")).toHaveCount(2);
   await expect(page.locator(".methods")).toContainText("15 Aralık 2025");
+  await expect(page.locator(".neighbor-list a")).toHaveCount(8);
+  await expect(page.locator(".portfolio-path a").first()).toHaveAttribute("href", "https://aserdargun.com/tr/");
   await page.getByRole("button", { name: "English", exact: true }).click();
   await expect(page.locator(".methods")).toContainText("December 15, 2025");
+  await expect(page.locator(".portfolio-path a").first()).toHaveAttribute("href", "https://aserdargun.com/");
+  await expect(page.getByRole("link", { name: /Explore the full learning system/ })).toHaveAttribute("href", "https://aserdargun.com/");
+  for (const code of ["hns", "arl", "ctx", "sec", "evl", "cul", "aos", "mem"]) {
+    await expect(page.locator(`.neighbor-list a[href="https://${code}.aserdargun.com/"]`)).toHaveAttribute("target", "_blank");
+  }
   await page.getByRole("button", { name: "Open example" }).nth(3).click();
   await expect(
     page.getByRole("button", { name: /04 An action/ }),
   ).toHaveAttribute("aria-pressed", "true");
   await expect(page.locator(".trace-empty")).toBeVisible();
+  await expect(page.getByLabel("Decision policy", { exact: true })).toHaveValue("adaptive");
+});
+test("comparison distinguishes failed verification from a check that did not run", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "English", exact: true }).click();
+  await page.getByText("Change conditions", { exact: true }).click();
+  await page.getByLabel("Result verification", { exact: true }).selectOption("fail");
+  await page.getByRole("button", { name: "Comparison", exact: true }).click();
+  await page.getByRole("button", { name: "Compare all three policies" }).click();
+  await expect(page.getByText("Failed (simulation)", { exact: true })).toHaveCount(3);
+  await page.getByRole("button", { name: "Edit conditions" }).click();
+  await page.getByRole("button", { name: /04 An action/ }).click();
+  await page.getByRole("button", { name: "Comparison", exact: true }).click();
+  await page.getByRole("button", { name: "Compare all three policies" }).click();
+  await expect(page.getByText("Not run", { exact: true })).toHaveCount(3);
+  await page.getByRole("button", { name: "Türkçe", exact: true }).click();
+  await expect(page.getByText("Çalıştırılmadı", { exact: true })).toHaveCount(3);
 });
 test("keyboard navigation, visible focus, reduced motion and accessibility", async ({
   page,

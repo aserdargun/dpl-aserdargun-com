@@ -1369,8 +1369,29 @@ footer {
   margin: 0;
   font-size: 13px;
 }
-.neighbor-list strong {
+.neighbor-list a {
   font-weight: 500;
+}
+
+.portfolio-path {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-bottom: 20px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.portfolio-path a {
+  padding: 6px 0;
+  text-underline-offset: 4px;
+}
+.neighbor-list a {
+  overflow-wrap: anywhere;
+  text-underline-offset: 4px;
+}
+.neighbor-list a svg {
+  vertical-align: middle;
 }
 .neighbor-list p {
   color: var(--muted);

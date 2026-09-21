@@ -16,8 +16,8 @@ export const policies: DecisionPolicy[] = [
     version: "1.0.0",
     name: { tr: "Derin değerlendirme", en: "Deep-first" },
     description: {
-      tr: "Ortak kontrollerden sonra her zaman ek kontrol yapar. Yeni kanıt veya yetki üretmek zorunda değildir.",
-      en: "Always performs an extra check after shared gates. This does not necessarily add evidence or authority.",
+      tr: "Ortak kontrollerden sonra her zaman ek kontrol yapar. Yeni bilgi sağlamayabilir; hiçbir zaman yetki vermez.",
+      en: "Always performs an extra check after shared gates. It may add no new information and never grants authority.",
     },
     checks: "always",
     evaluationCost: 2,

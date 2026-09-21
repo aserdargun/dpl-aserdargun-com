@@ -67,7 +67,7 @@ export const sources = [
     publisher: "Anthropic",
     url: "https://www.anthropic.com/engineering/building-effective-agents",
     published: "2024-12-19",
-    accessed: "2026-09-20",
+    accessed: "2026-09-21",
     note: bi(
       "Önceden tanımlı iş akışları ile modelin yönettiği ajan süreçlerini ayırır; yönlendirmeyi bir iş akışı örüntüsü olarak ele alır. DPL’nin deterministik yönlendirmesine kavramsal bağlam sağlar. Kaynak kendi araç ekosisteminin sonradan değiştiğini belirtiyor.",
       "Distinguishes predefined workflows from model-directed agent processes and presents routing as a workflow pattern. Provides conceptual context for DPL’s deterministic routing. The source notes that its tooling landscape has since changed.",
@@ -79,17 +79,22 @@ export const sources = [
     publisher: "Anthropic",
     url: "https://www.anthropic.com/engineering/claude-think-tool",
     published: "2025-03-20",
-    accessed: "2026-09-20",
+    accessed: "2026-09-21",
     note: bi(
       "Araç kullanımının ara aşamalarında ek değerlendirmeyi inceler. 15 Aralık 2025 güncellemesi, çoğu durumda ayrı think aracı yerine extended thinking öneriyor. DPL bu aracı veya sağlayıcı sonuçlarını yeniden üretmez; yazı tarihsel tasarım bağlamıdır.",
       "Examines additional evaluation during intermediate tool-use steps. Its December 15, 2025 update recommends extended thinking instead of a separate think tool in most cases. DPL reproduces neither this tool nor provider results; the article is historical design context.",
     ),
   },
 ];
+export const portfolioUrl = (locale: "tr" | "en") =>
+  locale === "tr" ? "https://aserdargun.com/tr/" : "https://aserdargun.com/";
+
+// Names and URLs follow the root portfolio catalog; links are navigation only.
 export const neighbors = [
   {
     code: "HNS",
     name: "Harness Engineering Observatory",
+    url: "https://hns.aserdargun.com/",
     role: bi(
       "Üst araştırma alanı: harness yaklaşımları ve mühendislik örüntüleri.",
       "Parent research area: harness approaches and engineering patterns.",
@@ -97,15 +102,17 @@ export const neighbors = [
   },
   {
     code: "ARL",
-    name: bi("Ajan çalışma zamanı", "Agent runtime"),
+    name: bi("Ajan Çalışma Zamanı Laboratuvarı", "Agent Runtime Laboratory"),
+    url: "https://arl.aserdargun.com/",
     role: bi(
-      "Niyetten eyleme uzanan ajan çalışma zamanı; DPL yalnızca karar yoluna odaklanır.",
-      "Agent runtime from intent to action; DPL focuses only on the decision path.",
+      "Niyetten eyleme uzanan deterministik ajan simülasyonu. DPL’de seçtiğiniz karar yolunu daha geniş bir araç, kanıt ve onay akışıyla karşılaştırın.",
+      "A deterministic agent simulation from intent to action. Compare DPL’s decision path with a broader tool, evidence, and approval flow.",
     ),
   },
   {
     code: "CTX",
-    name: bi("Bağlam ve bilgi düzenleme", "Context and knowledge organization"),
+    name: bi("Bağlam ve Bilgi Mühendisliği", "Context & Knowledge Engineering"),
+    url: "https://ctx.aserdargun.com/",
     role: bi(
       "Bağlamın hazırlanması ve bilginin düzenlenmesi. DPL’de kanıt koşulları sentetiktir.",
       "Context preparation and knowledge organization. DPL evidence conditions are synthetic.",
@@ -113,7 +120,8 @@ export const neighbors = [
   },
   {
     code: "SEC",
-    name: bi("Güvenlik sınırları", "Security boundaries"),
+    name: bi("AI Sistemleri Güvenlik Gözlemevi", "AI Systems Security Observatory"),
+    url: "https://sec.aserdargun.com/",
     role: bi(
       "Güvenlik sınırları. DPL’de ortak kapılar bir öğretim modelidir, gerçek güvenlik ürünü değildir.",
       "Security boundaries. DPL shared gates are a teaching model, not a real security product.",
@@ -121,10 +129,38 @@ export const neighbors = [
   },
   {
     code: "EVL",
-    name: bi("Değerlendirme ve güvenilirlik", "Evaluation and reliability"),
+    name: bi("AI Değerlendirme ve Güvenilirlik Laboratuvarı", "AI Evaluation & Reliability Lab"),
+    url: "https://evl.aserdargun.com/",
     role: bi(
       "Değerlendirme ve güvenilirlik alanı. DPL gerçek model doğruluğunu ölçmez.",
       "Evaluation and reliability. DPL does not measure real-model accuracy.",
+    ),
+  },
+  {
+    code: "CUL",
+    name: bi("Bilgisayar Kullanımı Laboratuvarı", "Computer Use Laboratory"),
+    url: "https://cul.aserdargun.com/",
+    role: bi(
+      "HNS altındaki diğer öğrenme laboratuvarı: karar yolundan bilgisayar arayüzündeki gözlem, eylem ve doğrulama döngüsüne geçin.",
+      "Another learning laboratory under HNS: move from the decision path to observation, action, and verification in a computer interface.",
+    ),
+  },
+  {
+    code: "AOS",
+    name: bi("Ajan İşletim Sistemi", "Agent Operating System"),
+    url: "https://aos.aserdargun.com/",
+    role: bi(
+      "Ajan çalışma ortamının mimarisini ve uygulama sınırlarını inceleyin. Bağlantı AOS tanıtım ve dokümantasyon sitesini açar; DPL içinde bir çalışma ortamı başlatmaz.",
+      "Explore agent runtime architecture and implementation boundaries. The link opens the AOS overview and documentation site; it does not start a runtime inside DPL.",
+    ),
+  },
+  {
+    code: "MEM",
+    name: bi("Ajan Belleği Laboratuvarı", "Agent Memory Laboratory"),
+    url: "https://mem.aserdargun.com/",
+    role: bi(
+      "CTX altındaki bellek laboratuvarı. Bağlamın ve hatırlanan bilginin karara etkisini araştırın; DPL koşuları bu uygulamaya aktarılmaz.",
+      "The memory laboratory under CTX. Explore how context and remembered information affect decisions; DPL runs are not transferred to this application.",
     ),
   },
 ];

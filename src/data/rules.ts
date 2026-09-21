@@ -57,8 +57,8 @@ export const rules: Record<string, Text> = {
     en: "The request is clear and evidence is sufficient. A short decision step ran.",
   },
   "OUTPUT.VERIFY": {
-    tr: "Sonuç için tutarlılık ve kanıt kontrolü uygulandı. Yetki yeniden değerlendirildi.",
-    en: "The result underwent a consistency and evidence check. Authority was checked again.",
+    tr: "Kullanıcının seçtiği sentetik doğrulama girdisi okundu. Kontrol sonrası kanıt ve başlangıçta sabitlenen yetki izde gösterilir; harici doğrulama yapılmaz.",
+    en: "The user-selected synthetic verification input was read. The trace shows evidence after checking and authority frozen at the start; no external verification occurs.",
   },
   "OUTPUT.REJECT": {
     tr: "Sentetik sonuç doğrulaması başarısız. Sonuç tamamlanmadı.",

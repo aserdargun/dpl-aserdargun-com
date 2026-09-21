@@ -7,7 +7,7 @@
 - `src/data/scenarios.ts`: six versioned scenarios, bilingual example records, default conditions, conditional appropriate outcomes.
 - `src/data/policies.ts`: three canonical policy configurations with shared gates and explicit extra-check costs.
 - `src/data/rules.ts`: readable rule IDs, bilingual rationale, prerequisite definitions.
-- `src/data/methods.ts`: source records, learning lessons, provenance and conceptual ecosystem relationships.
+- `src/data/methods.ts`: source records, learning lessons, provenance, locale-aware portfolio URL and related application links aligned with the root portfolio catalog.
 - `src/i18n`: state, field and value dictionaries. Scenario/rule/method content is bilingual at source.
 - `src/components`: independently owned diagram, condition controls, trace, evidence, comparison, and methods surfaces.
 - `src/App.tsx`: view composition and transient experiment state; language switching does not reset state.
@@ -41,7 +41,7 @@ The complete engine trace is calculated immediately; playback reveals steps in o
 
 ## Scientific boundaries
 
-DPL's policy definitions, gate priorities, costs and scenarios are educational design choices. Primary publications provide conceptual context only. The UI separately labels source-based explanations, DPL choices, synthetic records, and computed simulation results. There is no real model evaluation, inference call, external action, or validated cognitive mechanism. Adjacent portfolio apps have conceptual descriptions only and no invented links.
+DPL's policy definitions, gate priorities, costs and scenarios are educational design choices. Primary publications provide conceptual context only. The UI separately labels source-based explanations, DPL choices, synthetic records, and computed simulation results. There is no real model evaluation, inference call, external action, or validated cognitive mechanism. Related portfolio applications have catalog-backed navigation links, opened only on user click in a separate tab. Links carry no experiment data and have no runtime integration. DPL sits under HNS in the Agent system layer; MEM sits under CTX. Method examples start with default inputs and the adaptive policy so previous experiments cannot silently change their starting conditions.
 
 ## Static release
 

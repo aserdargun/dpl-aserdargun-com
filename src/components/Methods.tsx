@@ -1,6 +1,6 @@
 import { ArrowUpRight, BookOpen } from "lucide-react";
 import type { Locale } from "../domain/types";
-import { lessons, neighbors, sources } from "../data/methods";
+import { lessons, neighbors, portfolioUrl, sources } from "../data/methods";
 export function Methods({
   locale,
   onScenario,
@@ -39,6 +39,12 @@ export function Methods({
         </div>
       </section>
       <div className="lesson-list">
+        <p className="section-lead">
+          {t(
+            "Örnekler, senaryonun başlangıç koşulları ve uyarlamalı politikayla açılır. Ardından üç politikayı Karşılaştırma sayfasında deneyin.",
+            "Examples open with the scenario’s default conditions and adaptive policy. Then try all three policies on the Comparison page.",
+          )}
+        </p>
         {lessons.map((l, n) => (
           <article key={l.scenario}>
             <span className="lesson-number">0{n + 1}</span>
@@ -113,8 +119,8 @@ export function Methods({
               </a>
               <p className="source-dates">
                 {s.publisher} · {t("Yayın", "Published")}:{" "}
-                <time>{s.published}</time> · {t("Erişim", "Accessed")}:{" "}
-                <time>{s.accessed}</time>
+                <time dateTime={s.published}>{s.published}</time> · {t("Erişim", "Accessed")}:{" "}
+                <time dateTime={s.accessed}>{s.accessed}</time>
               </p>
               <p>{s.note[locale]}</p>
             </div>
@@ -125,18 +131,22 @@ export function Methods({
         <h2>{t("Ekosistemdeki yeri", "Place in the ecosystem")}</h2>
         <p className="section-lead">
           {t(
-            "Bunlar kavramsal komşuluklardır. Servis bağlantısı, veri alışverişi veya doğrulanmış uygulama adresi sunulmuyor.",
-            "These are conceptual relationships. No connected services, data exchange, or verified application addresses are offered.",
+            "DPL, aserdargun.com öğrenme sisteminin Ajan sistemi katmanında, HNS altında yer alır. Aşağıdaki bağlantılar bağımsız uygulamalara giden öğrenme yollarıdır. Servis entegrasyonu veya deney verisi aktarımı yoktur; yeni sekmede açılırlar.",
+            "DPL belongs to the Agent system layer of the aserdargun.com learning system, under HNS. These links are learning paths to independent applications. There is no service integration or experiment data transfer; links open in a new tab.",
           )}
         </p>
+        <a href={portfolioUrl(locale)} target="_blank" rel="noreferrer">
+          {t("Tüm öğrenme sistemini keşfet ↗", "Explore the full learning system ↗")}
+        </a>
         <dl className="neighbor-list">
           {neighbors.map((n) => (
             <div key={n.code}>
               <dt>{n.code}</dt>
               <dd>
-                <strong>
+                <a href={n.url} target="_blank" rel="noreferrer">
                   {typeof n.name === "string" ? n.name : n.name[locale]}
-                </strong>
+                  {" "}<ArrowUpRight size={13} aria-hidden="true" />
+                </a>
                 <p>{n.role[locale]}</p>
               </dd>
             </div>
@@ -147,8 +157,8 @@ export function Methods({
         <h2>{t("Kapsam ve sınırlar", "Scope and limitations")}</h2>
         <p>
           {t(
-            "DPL tarayıcıda bağımsız çalışır. Hesap, API anahtarı, backend, harici veri deposu veya model çağrısı gerekmez. Astra 6 High uygulamayı geliştiren modeldir; uygulama içinde çalışmaz. Bir simülasyonun “doğrulandı” sonucu, kullanıcı tarafından seçilen sentetik doğrulama girdisinin geçtiğini gösterir; gerçek çıktının doğruluğunu ölçmez.",
-            "DPL runs independently in the browser. It requires no account, API key, backend, external database, or model call. Astra 6 High is the model used to develop the application; it does not run inside it. A “verified” simulation result means the user-selected synthetic verification input passed; it does not measure the correctness of a real output.",
+            "DPL tarayıcıda bağımsız çalışır. Hesap, API anahtarı, backend, harici veri deposu veya model çağrısı gerekmez. Bir simülasyonun “doğrulandı” sonucu, kullanıcı tarafından seçilen sentetik doğrulama girdisinin geçtiğini gösterir; gerçek çıktının doğruluğunu ölçmez.",
+            "DPL runs independently in the browser. It requires no account, API key, backend, external database, or model call. A “verified” simulation result means the user-selected synthetic verification input passed; it does not measure the correctness of a real output.",
           )}
         </p>
         <p>
