@@ -9,10 +9,47 @@
       content="DPL — Karar Düzlemi Laboratuvarı. Karar politikalarını keşfeden bağımsız, deterministik TR/EN simülasyon."
     />
     <link rel="icon" href="/favicon.svg" />
+    <link rel="canonical" href="https://dpl.aserdargun.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="DPL — Decision Plane Laboratory" />
+    <meta
+      property="og:description"
+      content="An independent deterministic simulation for the decision plane: take a short path, evaluate further, ask for evidence, wait for approval, abstain or block an action."
+    />
+    <meta property="og:url" content="https://dpl.aserdargun.com/" />
+    <meta property="og:site_name" content="aserdargun.com" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="DPL — Decision Plane Laboratory" />
+    <meta
+      name="twitter:description"
+      content="An independent deterministic simulation for the decision plane: take a short path, evaluate further, ask for evidence, wait for approval, abstain or block an action."
+    />
     <title>DPL — Decision Plane Laboratory</title>
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <div lang="en">
+        <h1>DPL — Decision Plane Laboratory</h1>
+        <p>
+          An independent, deterministic simulation of a decision plane. It shows
+          how a policy takes a short path, evaluates further, asks for
+          evidence, waits for approval, abstains or blocks an action. No
+          scenario action is actually executed.
+        </p>
+        <ul>
+          <li>Six versioned scenarios, from clear tasks to untrusted content.</li>
+          <li>Three decision policies: Fast-first, Deep-first and Adaptive.</li>
+          <li>An ordered gate contract with a step budget, abstention and blocking.</li>
+          <li>Evidence requests, human approval and a readable run trace.</li>
+          <li>Side-by-side policy comparison and JSON run export.</li>
+        </ul>
+        <p>
+          This interactive laboratory needs JavaScript. Its scenarios, policies
+          and results are educational design choices, not validated measurements.
+        </p>
+      </div>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
