@@ -175,14 +175,14 @@ describe("complete scenario catalog", () => {
       ).toEqual(expected[n]);
     });
   it("lowering impact cannot remove a scenario-level approval gate", () => {
-    const s = scenarios.find((s) => s.id === "approval-required")!;
+    const s = scenarios.find((item) => item.id === "approval-required")!;
     for (const p of policies)
       expect(
         runExperiment(s, { ...s.input, impact: "low" }, p).outcome.state,
       ).toBe("approval");
   });
   it("untrusted record metadata stays untrusted even without an additional injected input", () => {
-    const s = scenarios.find((s) => s.id === "untrusted-content")!;
+    const s = scenarios.find((item) => item.id === "untrusted-content")!;
     const r = runExperiment(
       s,
       { ...s.input, untrustedInstruction: false },
