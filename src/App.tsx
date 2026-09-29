@@ -27,7 +27,7 @@ import { Methods } from "./components/Methods";
 import { portfolioUrl } from "./data/methods";
 export default function App() {
   const [locale, setLocale] = useState<Locale>(() =>
-    new URLSearchParams(window.location.search).get("lang") === "en" ? "en" : "tr",
+    new URLSearchParams(window.location.search).get("lang") === "tr" ? "tr" : "en",
   );
   const [page, setPage] = useState("lab");
   const [comparison, setComparison] = useState<ComparisonResult | null>(null);

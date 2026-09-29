@@ -22,7 +22,7 @@ test("play, pause, step, locale persistence, complete, export, reset", async ({
 }) => {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
-  await page.goto("/");
+  await page.goto("/?lang=tr");
   await page.getByRole("button", { name: "İlk deneyi başlat" }).click();
   await page.getByRole("button", { name: "Duraklat" }).click();
   const before = await page.locator(".run-bottom .mono").textContent();
@@ -66,7 +66,7 @@ test("play, pause, step, locale persistence, complete, export, reset", async ({
 test("changed inputs freeze old run and new run uses new authority", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("/?lang=tr");
   await page.getByRole("button", { name: "Adımla", exact: true }).click();
   await page.getByText("Koşulları değiştir", { exact: true }).click();
   await page.getByLabel("Mevcut yetki", { exact: true }).selectOption("denied");
@@ -93,7 +93,7 @@ const defaults = [
 ];
 for (const [name, outcome] of defaults)
   test(`scenario ${name}`, async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/?lang=tr");
     await page.getByRole("button", { name: new RegExp(name) }).click();
     await finish(page);
     await expect(page.locator(".trace .state-tag")).toHaveText(outcome);
@@ -109,7 +109,7 @@ for (const [name, outcome] of defaults)
 test("comparison starts equally, changes correctly, exports frozen results", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("/?lang=tr");
   await page
     .getByRole("button", { name: "Karşılaştırma", exact: true })
     .click();
@@ -146,7 +146,7 @@ test("comparison starts equally, changes correctly, exports frozen results", asy
 test("methods are bilingual, source links real and lesson opens intended scenario", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("/?lang=tr");
   await page.getByLabel("Karar politikası", { exact: true }).selectOption("deep");
   await page.getByRole("button", { name: "Kavramlar ve yöntem" }).click();
   await expect(page.locator(".lesson-list article")).toHaveCount(6);
@@ -169,7 +169,7 @@ test("methods are bilingual, source links real and lesson opens intended scenari
   await expect(page.getByLabel("Decision policy", { exact: true })).toHaveValue("adaptive");
 });
 test("comparison distinguishes failed verification from a check that did not run", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/?lang=tr");
   await page.getByRole("button", { name: "English", exact: true }).click();
   await page.getByText("Change conditions", { exact: true }).click();
   await page.getByLabel("Result verification", { exact: true }).selectOption("fail");
@@ -188,7 +188,7 @@ test("keyboard navigation, visible focus, reduced motion and accessibility", asy
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/");
+  await page.goto("/?lang=tr");
   await page.keyboard.press("Tab");
   await expect(page.locator(".skip-link")).toBeFocused();
   await page.keyboard.press("Enter");
@@ -225,7 +225,7 @@ for (const width of [320, 390, 768, 1440])
         if (m.type() === "error") errors.push(m.text());
       });
       await page.setViewportSize({ width, height: 1000 });
-      await page.goto("/");
+      await page.goto("/?lang=tr");
       if (language === "en")
         await page
           .getByRole("button", { name: "English", exact: true })
@@ -300,7 +300,7 @@ test("native concept viewport and early terminal route remain readable", async (
   page,
 }) => {
   await page.setViewportSize({ width: 1505, height: 1045 });
-  await page.goto("/");
+  await page.goto("/?lang=tr");
   await page.screenshot({
     path: "test-results/lab-native-1505.png",
     fullPage: true,
