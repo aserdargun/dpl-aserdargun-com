@@ -214,6 +214,68 @@ test("keyboard navigation, visible focus, reduced motion and accessibility", asy
     .analyze();
   expect(result.violations).toEqual([]);
 });
+for (const language of ["tr", "en"])
+  test(`every surface stays free of automated accessibility violations (${language})`, async ({
+    page,
+  }) => {
+    const tr = language === "tr";
+    const violations = async () => {
+      const result = await new AxeBuilder({ page })
+        .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+        .analyze();
+      return result.violations.map(
+        (v) =>
+          `${v.id} (${v.impact}): ${v.nodes
+            .map((n) => n.target.join(" "))
+            .join(", ")}`,
+      );
+    };
+    const compare = async () => {
+      await page
+        .getByRole("button", { name: tr ? "Karşılaştırma" : "Comparison", exact: true })
+        .click();
+      await page
+        .getByRole("button", {
+          name: tr ? "Üç politikayı karşılaştır" : "Compare all three policies",
+        })
+        .click();
+      await expect(page.locator(".comparison-column")).toHaveCount(3);
+    };
+    await page.goto(`/?lang=${language}`);
+    await compare();
+    await page
+      .getByRole("button", {
+        name: tr ? "Karar izini incele" : "Inspect decision trace",
+      })
+      .first()
+      .click();
+    const meter = page.locator(".policy-fast .unit-meter");
+    await expect(meter).toHaveAttribute("role", "progressbar");
+    await expect(meter).toHaveAttribute("aria-valuenow", "2");
+    await expect(meter).toHaveAttribute("aria-valuemax", "8");
+    await expect(meter).toHaveAttribute("aria-valuemin", "0");
+    expect(await violations()).toEqual([]);
+    await page.getByRole("button", { name: tr ? "Koşulları düzenle" : "Edit conditions" }).click();
+    const budget = page.getByLabel(
+      tr ? "Başlangıç bütçesi" : "Starting budget",
+      { exact: true },
+    );
+    await budget.focus();
+    await page.keyboard.press("Home");
+    await expect(budget).toHaveValue("0");
+    await compare();
+    await expect(page.locator(".policy-fast .unit-meter")).toHaveAttribute(
+      "aria-valuemax",
+      "0",
+    );
+    expect(await violations()).toEqual([]);
+    await page
+      .getByRole("button", {
+        name: tr ? "Kavramlar ve yöntem" : "Concepts & method",
+      })
+      .click();
+    expect(await violations()).toEqual([]);
+  });
 for (const width of [320, 390, 768, 1440])
   for (const language of ["tr", "en"])
     test(`responsive ${width} ${language}: all surfaces and diagram geometry`, async ({

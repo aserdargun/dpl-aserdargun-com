@@ -174,7 +174,15 @@ export function Comparison({
                 </div>
                 <div
                   className="unit-meter"
-                  aria-label={`${r.outcome.workUnits} / ${r.input.budget}`}
+                  role="progressbar"
+                  aria-label={t(
+                    "Tüketilen çalışma birimi",
+                    "Work units consumed",
+                  )}
+                  aria-valuemin={0}
+                  aria-valuemax={r.input.budget}
+                  aria-valuenow={r.outcome.workUnits}
+                  aria-valuetext={`${r.outcome.workUnits} / ${r.input.budget} ${t("çalışma birimi kullanıldı", "work units used")}`}
                 >
                   <span
                     style={{
