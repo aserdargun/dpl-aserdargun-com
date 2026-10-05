@@ -7,7 +7,13 @@ assert.match(release.commit, /^[a-f0-9]{40}$/);
 if (process.env.GITHUB_SHA)
   assert.equal(release.commit, process.env.GITHUB_SHA);
 assert.equal(release.schemaVersion, "1.0.0");
-for (const file of ["index.html", "favicon.svg", "staticwebapp.config.json"])
+for (const file of [
+  "index.html",
+  "favicon.svg",
+  "favicon-32.png",
+  "apple-touch-icon.png",
+  "staticwebapp.config.json",
+])
   assert.ok(release.files[file], `Missing ${file}`);
 const html = readFileSync("dist/index.html", "utf8");
 assert.ok(html.includes("DPL — Decision Plane Laboratory"));
@@ -32,7 +38,7 @@ assert.deepEqual(
 for (const [file, expected] of Object.entries(release.files)) {
   assert.match(
     file,
-    /^(?:index\.html|favicon\.svg|staticwebapp\.config\.json|assets\/[A-Za-z0-9_-]+\.(?:js|css))$/,
+    /^(?:index\.html|favicon\.svg|favicon-32\.png|apple-touch-icon\.png|staticwebapp\.config\.json|assets\/[A-Za-z0-9_-]+\.(?:js|css))$/,
   );
   const bytes = readFileSync(`dist/${file}`);
   assert.equal(bytes.length, expected.bytes);
