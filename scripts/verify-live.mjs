@@ -33,7 +33,7 @@ for (const [path, file] of Object.entries(release.files)) {
   if (path === "staticwebapp.config.json") continue; // Azure consumes the configuration rather than serving it.
   assert.match(
     path,
-    /^(?:index\.html|favicon\.svg|assets\/[A-Za-z0-9_-]+\.(?:js|css))$/,
+    /^(?:index\.html|favicon\.svg|favicon-32\.png|apple-touch-icon\.png|assets\/[A-Za-z0-9_-]+\.(?:js|css))$/,
   );
   const res = await get(`/${path}`);
   const bytes = Buffer.from(await res.arrayBuffer());
@@ -52,7 +52,9 @@ for (const [path, file] of Object.entries(release.files)) {
         ? /(?:application|text)\/javascript/
         : path.endsWith(".css")
           ? /text\/css/
-          : /image\/svg\+xml/,
+          : path.endsWith(".png")
+            ? /image\/png/
+            : /image\/svg\+xml/,
   );
   if (path.startsWith("assets/"))
     assert.match(res.headers.get("cache-control") ?? "", /immutable/);
