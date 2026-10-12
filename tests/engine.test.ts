@@ -117,6 +117,73 @@ describe("decision engine", () => {
         policies[1],
       ).outcome.ruleId,
     ).toBe("CHECK.CONTRADICTION"));
+
+  /* ARCHITECTURE.md publishes this routing table as the contract:
+   *
+   *   | Policy     | Clear, current, low impact | Stale/conflicting | High impact, authorized |
+   *   | Fast-first | Fast step                   | Request evidence  | Fast step              |
+   *   | Deep-first | Extra check                 | Extra check       | Extra check            |
+   *   | Adaptive   | Fast step                   | Extra check       | Extra check            |
+   *
+   * Every existing test probes one cell in isolation, so the table could drift
+   * without any of them noticing: making `adaptive` ignore impact completed a
+   * high-impact action on the fast path with no extra check, and all 48 tests
+   * still passed. That is exactly the "silently fall through to a different
+   * policy" this repo's working contract forbids, so the whole table is now
+   * asserted cell by cell against a scenario that adds no approval gate of its
+   * own - the table describes the routing decision, not the approval gate.
+   */
+  it("routes every policy by the published table", () => {
+    const open = scenarios.find((s) => !s.requiresApproval);
+    expect(open, "no scenario without a scenario-level approval gate").toBeDefined();
+    const conditions = [
+      { label: "clear, current, low impact", evidence: "sufficient", impact: "low" },
+      { label: "stale evidence", evidence: "stale", impact: "low" },
+      { label: "high impact, authorized", evidence: "sufficient", impact: "high" },
+    ] as const;
+    /* [extra check performed, terminal state, work units] per policy per column */
+    const table: Record<string, [boolean, string, number][]> = {
+      fast: [
+        [false, "complete", 2],
+        [false, "request_evidence", 0],
+        [false, "complete", 2],
+      ],
+      deep: [
+        [true, "complete", 3],
+        [true, "complete", 3],
+        [true, "complete", 3],
+      ],
+      adaptive: [
+        [false, "complete", 2],
+        [true, "complete", 3],
+        [true, "complete", 3],
+      ],
+    };
+    for (const p of policies) {
+      const expected = table[p.id];
+      expect(expected, `policy ${p.id} has no published routing row`).toBeDefined();
+      conditions.forEach((c, i) => {
+        const run = runExperiment(
+          open!,
+          { ...baseInput, evidence: c.evidence, impact: c.impact },
+          p,
+        );
+        const [extra, state, work] = expected[i];
+        expect(
+          run.events.some((e) => e.state === "evaluate"),
+          `${p.id} / ${c.label}: extra check ${extra ? "expected" : "unexpected"}`,
+        ).toBe(extra);
+        expect(
+          run.outcome.state,
+          `${p.id} / ${c.label}: terminal state`,
+        ).toBe(state);
+        expect(
+          run.outcome.workUnits,
+          `${p.id} / ${c.label}: work units`,
+        ).toBe(work);
+      });
+    }
+  });
   it("all comparisons share identical start conditions, versions, and evidence", () => {
     const c = comparePolicies(scenarios[0], baseInput);
     for (const r of c.runs) {
