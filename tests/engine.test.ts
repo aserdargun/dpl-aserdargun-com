@@ -76,6 +76,130 @@ describe("decision engine", () => {
       ).toBe("OUTPUT.REJECT");
     });
   }
+  /* docs/ARCHITECTURE.md:18 publishes the gate order as the contract:
+   *
+   *   input snapshot -> shared checks -> untrusted-data isolation ->
+   *   denied authority -> required approval -> ambiguous request ->
+   *   missing mandatory evidence -> routing
+   *
+   * Every gate test above violates exactly one gate and leaves the others
+   * passing, so two failing gates can be swapped freely. Moving the clarity
+   * check above the approval check made a high-impact pending action terminate
+   * at INPUT.CLARIFY instead of AUTH.APPROVAL - the run reported "clarification
+   * requested" where the contract promises "awaiting human approval", and
+   * Trace.tsx renders that rule's rationale - while all 48 tests stayed green.
+   * Each case below therefore violates several gates at once and asserts the
+   * exact recorded sequence, which pins order and short-circuiting together.
+   */
+  it("gates short-circuit in the published order", () => {
+    const open = scenarios.find((s) => !s.requiresApproval)!;
+    const gated = scenarios.find((s) => s.requiresApproval)!;
+    const seq = (r: ReturnType<typeof runExperiment>) =>
+      r.events.map((e) => e.ruleId);
+
+    /* Denied authority outranks approval, clarity and mandatory evidence. */
+    const blocked = runExperiment(
+      open,
+      {
+        ...baseInput,
+        authorization: "denied",
+        impact: "high",
+        ambiguity: "ambiguous",
+        evidence: "missing",
+      },
+      policies[0],
+    );
+    expect(seq(blocked)).toEqual([
+      "INPUT.SNAPSHOT",
+      "GATE.SHARED",
+      "AUTH.DENIED",
+    ]);
+    expect(blocked.outcome.state).toBe("blocked");
+
+    /* Impact alone still needs approval before any content gate. */
+    const highImpact = runExperiment(
+      open,
+      {
+        ...baseInput,
+        impact: "high",
+        authorization: "pending",
+        ambiguity: "ambiguous",
+        evidence: "missing",
+      },
+      policies[0],
+    );
+    expect(seq(highImpact)).toEqual([
+      "INPUT.SNAPSHOT",
+      "GATE.SHARED",
+      "AUTH.APPROVAL",
+    ]);
+    expect(highImpact.outcome.state).toBe("approval");
+
+    /* A scenario-level approval gate is not lowered by content gates. */
+    const scenarioGate = runExperiment(
+      gated,
+      {
+        ...baseInput,
+        authorization: "pending",
+        ambiguity: "ambiguous",
+        evidence: "missing",
+      },
+      policies[2],
+    );
+    expect(seq(scenarioGate)).toEqual([
+      "INPUT.SNAPSHOT",
+      "GATE.SHARED",
+      "AUTH.APPROVAL",
+    ]);
+    expect(scenarioGate.outcome.state).toBe("approval");
+
+    /* Intent uncertainty outranks missing evidence: two distinct diagnoses. */
+    const clarify = runExperiment(
+      open,
+      { ...baseInput, ambiguity: "ambiguous", evidence: "missing" },
+      policies[0],
+    );
+    expect(seq(clarify)).toEqual([
+      "INPUT.SNAPSHOT",
+      "GATE.SHARED",
+      "INPUT.CLARIFY",
+    ]);
+    expect(clarify.outcome.state).toBe("clarify");
+
+    /* Quarantine is an audit event, not a terminal state, and runs before
+       routing - so the run continues to the next gate instead of stopping. */
+    const quarantined = runExperiment(
+      open,
+      { ...baseInput, untrustedInstruction: true, evidence: "missing" },
+      policies[0],
+    );
+    expect(seq(quarantined)).toEqual([
+      "INPUT.SNAPSHOT",
+      "GATE.SHARED",
+      "DATA.QUARANTINE",
+      "EVIDENCE.MISSING",
+    ]);
+    expect(quarantined.outcome.state).toBe("request_evidence");
+
+    /* Routing is reached only after every higher-priority gate passed. */
+    expect(seq(runExperiment(open, baseInput, policies[0]))).toEqual([
+      "INPUT.SNAPSHOT",
+      "GATE.SHARED",
+      "ROUTE.SELECT",
+      "PATH.FAST",
+      "OUTPUT.VERIFY",
+      "OUTPUT.COMPLETE",
+    ]);
+    /* The deep policy inserts its extra check inside the same routed phase. */
+    expect(seq(runExperiment(open, baseInput, policies[1]))).toEqual([
+      "INPUT.SNAPSHOT",
+      "GATE.SHARED",
+      "ROUTE.SELECT",
+      "CHECK.EXTRA",
+      "OUTPUT.VERIFY",
+      "OUTPUT.COMPLETE",
+    ]);
+  });
   it("deep spends more for the same validated clear-task outcome", () => {
     const c = comparePolicies(scenarios[0], baseInput);
     expect(c.runs.every((r) => r.outcome.verified)).toBe(true);
