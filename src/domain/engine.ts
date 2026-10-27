@@ -10,6 +10,17 @@ import type {
 } from "./types";
 import { policies } from "../data/policies";
 
+/**
+ * The budget bounds the engine enforces.
+ *
+ * The same pair is the range of the budget slider, so a reader can only
+ * choose a budget a run accepts: the control used to spell the upper bound
+ * out on its own, and a run is not wrapped in a try/catch, so the two had to
+ * be edited together to stay safe.
+ */
+export const MIN_BUDGET = 0;
+export const MAX_BUDGET = 16;
+
 export function validateInput(input: ScenarioInput): void {
   const options: Record<string, readonly unknown[]> = {
     ambiguity: ["clear", "ambiguous"],
@@ -24,7 +35,11 @@ export function validateInput(input: ScenarioInput): void {
     if (!values.includes(input[key as keyof ScenarioInput]))
       throw new Error("INVALID_INPUT");
   }
-  if (!Number.isInteger(input.budget) || input.budget < 0 || input.budget > 16)
+  if (
+    !Number.isInteger(input.budget) ||
+    input.budget < MIN_BUDGET ||
+    input.budget > MAX_BUDGET
+  )
     throw new Error("INVALID_BUDGET");
 }
 function hash(value: string): string {

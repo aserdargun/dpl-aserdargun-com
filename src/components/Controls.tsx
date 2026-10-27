@@ -1,4 +1,5 @@
 import type { Locale, PolicyId, ScenarioInput } from "../domain/types";
+import { MAX_BUDGET, MIN_BUDGET } from "../domain/engine";
 import { policies } from "../data/policies";
 import { fieldNames, val } from "../i18n";
 export function Controls({
@@ -56,8 +57,8 @@ export function Controls({
       <input
         id="budget"
         type="range"
-        min="0"
-        max="16"
+        min={MIN_BUDGET}
+        max={MAX_BUDGET}
         step="1"
         value={input.budget}
         onChange={(e) => onInput({ ...input, budget: Number(e.target.value) })}
