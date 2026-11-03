@@ -1,5 +1,10 @@
 import { expect, it } from "vitest";
-import { runExperiment, validateInput } from "../src/domain/engine";
+import {
+  BOOLEAN_OPTIONS,
+  INPUT_OPTIONS,
+  runExperiment,
+  validateInput,
+} from "../src/domain/engine";
 import { policies } from "../src/data/policies";
 import { baseInput, scenarios } from "../src/data/scenarios";
 import { lessons, neighbors, sources } from "../src/data/methods";
@@ -46,15 +51,13 @@ const everyState: Record<DecisionState, true> = {
   complete: true,
 };
 
-/** The values each input field accepts, checked against the engine itself. */
-const legalValues: Record<string, string[]> = {
-  ambiguity: ["clear", "ambiguous"],
-  evidence: ["sufficient", "missing", "stale", "conflicting"],
-  impact: ["low", "high"],
-  authorization: ["granted", "pending", "denied"],
-  checkResult: ["resolves", "inconclusive", "contradicts"],
-  verification: ["pass", "fail"],
-  untrustedInstruction: ["true", "false"],
+/** The values each input field accepts, read from the engine itself.
+ * The list used to be maintained by hand here as well as in the engine and
+ * the control, so a value the engine gained was never checked for a label
+ * until someone copied it into this file. */
+const legalValues: Record<string, readonly string[]> = {
+  ...INPUT_OPTIONS,
+  untrustedInstruction: BOOLEAN_OPTIONS,
 };
 
 const runs = scenarios.flatMap((scenario) =>

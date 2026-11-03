@@ -22,10 +22,10 @@ The endpoint above is Azure's allocated resource hostname. A release is verified
 
 1. Official checkout/setup actions pinned to verified immutable commit SHAs.
 2. Node 22, locked `npm ci`, Chromium browser and system dependencies.
-3. `npm run validate`: 44 domain/lifecycle tests, TypeScript, production build, static artifact reference/hash verification, 20 production-build browser tests, whitespace check.
+3. `npm run validate`: the domain/lifecycle unit suite, TypeScript, production build, static artifact reference/hash verification, the production-build browser suite, whitespace check.
 4. Upload only prebuilt `dist/` with `Azure/static-web-apps-deploy`; both build steps skipped; no API directory or source integration.
 5. Verify HTTPS release SHA, root document, all public asset hashes, HTTP types, and cache rules.
-6. Run all 20 browser tests against the live endpoint. These interact only with local simulation state and download local JSON; no backend write endpoint exists.
+6. Run the browser suite against the live endpoint. These interact only with local simulation state and download local JSON; no backend write endpoint exists.
 
 The SHA, branch, workflow success, Azure environment Ready status and update time must agree. Deployment is serialized with `cancel-in-progress: false`. Secrets are passed directly from Azure CLI to GitHub's secret store without printing or saving values. Repository permissions are read-only for the workflow. The secret gives the deployment action access to this specific Azure resource.
 

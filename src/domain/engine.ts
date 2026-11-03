@@ -21,20 +21,38 @@ import { policies } from "../data/policies";
 export const MIN_BUDGET = 0;
 export const MAX_BUDGET = 16;
 
+/**
+ * The values each input field accepts.
+ *
+ * The control offers these and the engine validates them, so a reader can
+ * only choose a value a run accepts. The control used to spell the same six
+ * lists out by hand, and a run is not wrapped in a try/catch, so the two had
+ * to be edited together to stay safe: one stale option would have thrown
+ * INVALID_INPUT during a run and blanked the page.
+ */
+export const INPUT_OPTIONS = {
+  ambiguity: ["clear", "ambiguous"],
+  evidence: ["sufficient", "missing", "stale", "conflicting"],
+  impact: ["low", "high"],
+  authorization: ["granted", "pending", "denied"],
+  checkResult: ["resolves", "inconclusive", "contradicts"],
+  verification: ["pass", "fail"],
+} as const satisfies Record<string, readonly string[]>;
+
+/** The one boolean input; the control offers it as a checkbox. */
+export const BOOLEAN_OPTIONS = ["true", "false"] as const;
+
 export function validateInput(input: ScenarioInput): void {
-  const options: Record<string, readonly unknown[]> = {
-    ambiguity: ["clear", "ambiguous"],
-    evidence: ["sufficient", "missing", "stale", "conflicting"],
-    impact: ["low", "high"],
-    authorization: ["granted", "pending", "denied"],
-    checkResult: ["resolves", "inconclusive", "contradicts"],
-    verification: ["pass", "fail"],
-    untrustedInstruction: [true, false],
-  };
-  for (const [key, values] of Object.entries(options)) {
-    if (!values.includes(input[key as keyof ScenarioInput]))
+  for (const [key, values] of Object.entries(INPUT_OPTIONS)) {
+    if (
+      !(values as readonly unknown[]).includes(
+        input[key as keyof ScenarioInput],
+      )
+    )
       throw new Error("INVALID_INPUT");
   }
+  if (typeof input.untrustedInstruction !== "boolean")
+    throw new Error("INVALID_INPUT");
   if (
     !Number.isInteger(input.budget) ||
     input.budget < MIN_BUDGET ||

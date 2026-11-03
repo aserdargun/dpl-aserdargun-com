@@ -1,5 +1,5 @@
 import type { Locale, PolicyId, ScenarioInput } from "../domain/types";
-import { MAX_BUDGET, MIN_BUDGET } from "../domain/engine";
+import { INPUT_OPTIONS, MAX_BUDGET, MIN_BUDGET } from "../domain/engine";
 import { policies } from "../data/policies";
 import { fieldNames, val } from "../i18n";
 export function Controls({
@@ -16,20 +16,15 @@ export function Controls({
   onPolicy: (id: PolicyId) => void;
 }) {
   const t = (tr: string, en: string) => (locale === "tr" ? tr : en);
-  const fields: { key: keyof ScenarioInput; options: string[] }[] = [
-    { key: "ambiguity", options: ["clear", "ambiguous"] },
-    {
-      key: "evidence",
-      options: ["sufficient", "missing", "stale", "conflicting"],
-    },
-    { key: "impact", options: ["low", "high"] },
-    { key: "authorization", options: ["granted", "pending", "denied"] },
-    {
-      key: "checkResult",
-      options: ["resolves", "inconclusive", "contradicts"],
-    },
-    { key: "verification", options: ["pass", "fail"] },
-  ];
+  // The options are read from the engine, so the control can only ever offer a
+  // value a run accepts. They used to be spelled out here as well, which meant
+  // the control and the engine had to be edited together to stay safe.
+  const fields: { key: keyof ScenarioInput; options: string[] }[] = (
+    Object.entries(INPUT_OPTIONS) as [
+      keyof ScenarioInput,
+      readonly string[],
+    ][]
+  ).map(([key, options]) => ({ key, options: [...options] }));
   return (
     <section className="conditions">
       <h2>{t("Deney koşulları", "Experiment conditions")}</h2>
